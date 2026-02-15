@@ -14,10 +14,19 @@ const Testimonials = () => {
 const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const testimonials = [
+
+    {
+      name: 'Etablissement le Reveil',
+      role: 'Conférence organisée',
+      image: '/images/restaurant.jpg',
+      content: 'Nous avons organisé une conférence dans les salles de l\'hôtel et tout s\'est déroulé à merveille. L\'équipe a été très professionnelle et les équipements étaient de haute qualité.',
+      rating: 5,
+      date: 'Janvier 2026',
+    },
     {
       name: 'Mr Noé Gentil',
       role: 'Client au restaurant',
-      image: '/images/Noé Gentil.jpeg',
+      image: '/images/gallery/Noé Gentil.jpeg',
       content: 'Une expérience culinaire exceptionnelle ! Les plats sont raffinés et le service est impeccable. Le cadre est magnifique, je recommande vivement.',
       rating: 5,
       date: 'Janvier 2026',
