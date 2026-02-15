@@ -168,7 +168,7 @@ const Hero = () => {
                text-sm md:text-lg 
                font-bold 
                shadow-2xl 
-               w-full max-w-xs md:max-w-md 
+               max-w-xs md:max-w-md 
                justify-center"
   >
     <MessageCircle size={22} />

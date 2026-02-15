@@ -70,7 +70,7 @@ const timerRef = useRef<NodeJS.Timeout | null>(null);
       timerRef.current = setInterval(() => {
         setDirection(1);
         setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-      }, 4000);
+      }, 5000);
     }
 
     return () => {
