@@ -15,44 +15,44 @@ const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const testimonials = [
     {
-      name: 'Sophie Martin',
-      role: 'Cliente restaurant',
-      image: '/images/restaurant.jpg',
+      name: 'Mr Noé Gentil',
+      role: 'Client au restaurant',
+      image: '/images/Noé Gentil.jpeg',
       content: 'Une expérience culinaire exceptionnelle ! Les plats sont raffinés et le service est impeccable. Le cadre est magnifique, je recommande vivement.',
       rating: 5,
-      date: 'Mars 2024',
+      date: 'Janvier 2026',
     },
     {
-      name: 'Thomas Dubois',
-      role: 'Client hôtel',
-      image: '/images/hotel.jpg',
+      name: 'Judicaël',
+      role: 'Client à hôtel',
+      image: '/images/Judicaël.jpeg',
       content: 'Un séjour merveilleux dans cet hôtel. Les chambres sont luxueuses et le personnel aux petits soins. La piscine est un vrai plus pour se détendre.',
       rating: 5,
-      date: 'Février 2024',
+      date: 'Janvier 2026',
     },
     {
-      name: 'Marie Laurent',
+      name: 'DJ Ginette',
       role: 'Organisatrice de conférence',
-      image: '/images/conference.jpg',
+      image: '/images/Ginette.jpeg',
       content: 'Les salles de conférence sont parfaitement équipées. L\'équipe a été très professionnelle pour l\'organisation de notre séminaire. Merci !',
       rating: 5,
-      date: 'Janvier 2024',
+      date: 'Janvier 2026',
     },
     {
-      name: 'Pierre Moreau',
-      role: 'Client spa',
-      image: '/images/piscine.jpg',
+      name: 'Mirabelle',
+      role: 'Cliente spa',
+      image: '/images/Mirabelle.jpeg',
       content: 'Le spa est un véritable havre de paix. Les soins sont de grande qualité et l\'ambiance est apaisante. Je reviendrai sans hésiter.',
       rating: 5,
-      date: 'Décembre 2023',
+      date: 'Février 2026',
     },
     {
-      name: 'Isabelle Petit',
-      role: 'Cliente restaurant',
-      image: '/images/restaurant-2.jpg',
+      name: 'Mr Mikaël',
+      role: 'Client au restaurant',
+      image: '/images/Miko.jpeg',
       content: 'Le dîner aux chandelles était parfait ! Une cuisine créative et délicate, un service attentionné sans être envahissant. Une adresse à garder précieusement.',
       rating: 5,
-      date: 'Novembre 2023',
+      date: 'Février 2026',
     },
   ];
 
@@ -61,7 +61,7 @@ const timerRef = useRef<NodeJS.Timeout | null>(null);
       timerRef.current = setInterval(() => {
         setDirection(1);
         setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-      }, 6000);
+      }, 4000);
     }
 
     return () => {

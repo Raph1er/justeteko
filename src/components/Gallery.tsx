@@ -9,6 +9,8 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('Tous');
+  const [visibleCount, setVisibleCount] = useState(6);
+
 
   const images = [
     {
@@ -17,19 +19,19 @@ const Gallery = () => {
       category: 'Restaurant',
       description: 'Une expérience culinaire exceptionnelle'
     },
-        {
+    {
       src: '/images/gallery/rest2.jpg',
       alt: 'Restaurant gastronomique',
       category: 'Restaurant',
       description: 'Une expérience culinaire exceptionnelle'
     },
-            {
+    {
       src: '/images/gallery/rest3.jpg',
       alt: 'Restaurant gastronomique',
       category: 'Restaurant',
       description: 'Une expérience culinaire exceptionnelle'
     },
-            {
+    {
       src: '/images/gallery/rest4.jpg',
       alt: 'Restaurant gastronomique',
       category: 'Restaurant',
@@ -41,19 +43,19 @@ const Gallery = () => {
       category: 'Hôtel',
       description: 'Luxe et confort absolu'
     },
-        {
+    {
       src: '/images/gallery/hotel2.webp',
       alt: 'Suite Royale',
       category: 'Hôtel',
       description: 'Luxe et confort absolu'
     },
-        {
+    {
       src: '/images/gallery/hotel3.webp',
       alt: 'Suite Royale',
       category: 'Hôtel',
       description: 'Luxe et confort absolu'
     },
-        {
+    {
       src: '/images/gallery/hotel4.jpg',
       alt: 'Suite Royale',
       category: 'Hôtel',
@@ -66,13 +68,13 @@ const Gallery = () => {
       description: 'Espace moderne et équipé'
     },
 
-        {
+    {
       src: '/images/gallery/conf2.webp',
       alt: 'Salle de conférence',
       category: 'Conférence',
       description: 'Espace moderne et équipé'
     },
-            {
+    {
       src: '/images/gallery/conf3.webp',
       alt: 'Salle de conférence',
       category: 'Conférence',
@@ -84,13 +86,13 @@ const Gallery = () => {
       category: 'Piscine',
       description: 'Vue panoramique sur la mer'
     },
-        {
+    {
       src: '/images/gallery/pisc2.webp',
       alt: 'Piscine à débordement',
       category: 'Piscine',
       description: 'Vue panoramique sur la mer'
     },
-        {
+    {
       src: '/images/gallery/pisc3.webp',
       alt: 'Piscine à débordement',
       category: 'Piscine',
@@ -111,17 +113,17 @@ const Gallery = () => {
   ];
 
   const categories = ['Tous', ...new Set(images.map(img => img.category))];
-  const filteredImages = activeCategory === 'Tous' 
-    ? images 
+  const filteredImages = activeCategory === 'Tous'
+    ? images
     : images.filter(img => img.category === activeCategory);
 
   const handlePrevious = () => {
-    setSelectedImage(prev => prev !== null ? 
+    setSelectedImage(prev => prev !== null ?
       (prev === 0 ? filteredImages.length - 1 : prev - 1) : null);
   };
 
   const handleNext = () => {
-    setSelectedImage(prev => prev !== null ? 
+    setSelectedImage(prev => prev !== null ?
       (prev === filteredImages.length - 1 ? 0 : prev + 1) : null);
   };
 
@@ -177,11 +179,11 @@ const Gallery = () => {
       fontWeight: isActive ? '600' : '400',
       cursor: 'pointer',
       transition: 'all 0.3s ease',
-      background: isActive 
+      background: isActive
         ? 'linear-gradient(135deg, #ff69b4 0%, #ff1493 100%)'
         : '#ffffff',
       color: isActive ? '#ffffff' : '#666',
-      boxShadow: isActive 
+      boxShadow: isActive
         ? '0 10px 20px rgba(255, 105, 180, 0.3)'
         : '0 4px 6px rgba(0, 0, 0, 0.05)',
       transform: isActive ? 'scale(1.05)' : 'scale(1)',
@@ -190,7 +192,7 @@ const Gallery = () => {
     }),
     grid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+gridTemplateColumns: 'repeat(4, 1fr)',
       gap: '1.5rem',
       marginTop: '2rem'
     },
@@ -200,8 +202,9 @@ const Gallery = () => {
       overflow: 'hidden',
       cursor: 'pointer',
       aspectRatio: '1',
-      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-      transition: 'all 0.3s ease'
+      border: '2px solid rgba(255, 105, 180, 0.4)',
+      boxShadow: '0 0 15px rgba(255, 105, 180, 0.3)',
+      transition: 'all 0.4s ease'
     },
     cardImage: {
       transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -293,10 +296,11 @@ const Gallery = () => {
       fontWeight: '300'
     },
     '@media (max-width: 768px)': {
-      grid: {
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '1rem'
-      },
+     grid: {
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: '1rem'
+},
+
       filters: {
         gap: '0.5rem'
       },
@@ -322,7 +326,7 @@ const Gallery = () => {
             Notre <span style={styles.titleHighlight}>Galerie</span>
           </h2>
           <p style={styles.subtitle}>
-            Plongez dans l'atmosphère unique de notre établissement 
+            Plongez dans l'atmosphère unique de notre établissement
             à travers une sélection d'images soigneusement choisies
           </p>
         </motion.div>
@@ -364,7 +368,7 @@ const Gallery = () => {
           style={styles.grid}
         >
           <AnimatePresence>
-            {filteredImages.map((image, index) => (
+        {filteredImages.slice(0, visibleCount).map((image, index) => (
               <motion.div
                 key={index}
                 layout
@@ -374,15 +378,18 @@ const Gallery = () => {
                 transition={{ duration: 0.5 }}
                 style={styles.card}
                 onClick={() => setSelectedImage(index)}
-                whileHover={{ 
-                  y: -10,
-                  boxShadow: '0 20px 40px rgba(255, 105, 180, 0.3)'
+                whileHover={{
+                  y: -8,
+                  boxShadow: '0 0 25px rgba(255, 20, 147, 0.8)',
+                  scale: 1.03
                 }}
+
               >
-                <div style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  position: 'relative' 
+                
+                <div style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative'
                 }}>
                   <Image
                     src={image.src}
@@ -392,19 +399,19 @@ const Gallery = () => {
                     style={styles.cardImage}
                   />
                 </div>
-                
-                <motion.div 
+
+                <motion.div
                   style={styles.cardOverlay}
                   whileHover={{ opacity: 1 }}
                 >
-                  <motion.h3 
+                  <motion.h3
                     style={styles.cardTitle}
                     initial={{ y: 20 }}
                     whileHover={{ y: 0 }}
                   >
                     {image.alt}
                   </motion.h3>
-                  <motion.p 
+                  <motion.p
                     style={styles.cardCategory}
                     initial={{ y: 20 }}
                     whileHover={{ y: 0 }}
@@ -416,6 +423,28 @@ const Gallery = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+
+{visibleCount < filteredImages.length && (
+  <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+    <button
+      onClick={() => setVisibleCount(prev => prev + 6)}
+      style={{
+        padding: '0.8rem 2.5rem',
+        borderRadius: '50px',
+        border: 'none',
+        background: 'linear-gradient(135deg, #ff69b4 0%, #ff1493 100%)',
+        color: 'white',
+        fontSize: '1rem',
+        fontWeight: '600',
+        cursor: 'pointer',
+        boxShadow: '0 10px 20px rgba(255,105,180,0.4)',
+        transition: 'all 0.3s ease'
+      }}
+    >
+      Voir plus
+    </button>
+  </div>
+)}
 
         {/* Modal plein écran */}
         <AnimatePresence>
@@ -471,10 +500,10 @@ const Gallery = () => {
                 </button>
 
                 <div style={styles.modalImage}>
-                  <div style={{ 
-                    position: 'relative', 
-                    width: '100%', 
-                    aspectRatio: '16/9' 
+                  <div style={{
+                    position: 'relative',
+                    width: '100%',
+                    aspectRatio: '16/9'
                   }}>
                     <Image
                       src={filteredImages[selectedImage].src}
@@ -502,13 +531,13 @@ const Gallery = () => {
       <style jsx>{`
         @media (max-width: 768px) {
           ${Object.entries(styles['@media (max-width: 768px)']).map(([key, value]) => {
-            if (typeof value === 'object') {
-              return Object.entries(value).map(([subKey, subValue]) => 
-                `.${key} { ${subKey}: ${subValue}; }`
-              ).join(' ');
-            }
-            return '';
-          }).join(' ')}
+        if (typeof value === 'object') {
+          return Object.entries(value).map(([subKey, subValue]) =>
+            `.${key} { ${subKey}: ${subValue}; }`
+          ).join(' ');
+        }
+        return '';
+      }).join(' ')}
         }
       `}</style>
     </section>
