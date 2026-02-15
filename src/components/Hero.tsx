@@ -11,7 +11,7 @@ const Hero = () => {
   const slides = [
     {
       image: '/images/restaurant.jpg',
-      title: 'Une Expérience Culinaire Exceptionnelle',
+      title: 'Bienvenue chez Juste TEKO',
       subtitle: 'Découvrez notre restaurant gastronomique',
       buttonText: 'Voir le menu',
     },
@@ -38,7 +38,7 @@ const Hero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 9000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -50,6 +50,41 @@ const Hero = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
+
+  // Animation effet d'écriture PRO : chaque lettre s'affiche dans l'ordre, sans mélange
+  const [displayedTitle, setDisplayedTitle] = useState('');
+  const [displayedSubtitle, setDisplayedSubtitle] = useState('');
+  useEffect(() => {
+    let isUnmounted = false;
+    setDisplayedTitle('');
+    setDisplayedSubtitle('');
+    const title = slides[currentSlide].title;
+    const subtitle = slides[currentSlide].subtitle;
+    let titleIndex = 0;
+    let subtitleIndex = 0;
+    function typeTitleSync() {
+      if (isUnmounted) return;
+      setDisplayedTitle(title.slice(0, titleIndex + 1));
+      if (titleIndex < title.length) {
+        titleIndex++;
+        setTimeout(typeTitleSync, 120);
+      } else {
+        typeSubtitleSync();
+      }
+    }
+    function typeSubtitleSync() {
+      if (isUnmounted) return;
+      setDisplayedSubtitle(subtitle.slice(0, subtitleIndex + 1));
+      if (subtitleIndex < subtitle.length) {
+        subtitleIndex++;
+        setTimeout(typeSubtitleSync, 18);
+      }
+    }
+    typeTitleSync();
+    return () => {
+      isUnmounted = true;
+    };
+  }, [currentSlide]);
 
   return (
     <div className="relative h-screen overflow-hidden bg-primary-100">
@@ -63,7 +98,6 @@ const Hero = () => {
         >
           {/* Image de fond avec overlay */}
           <div className="relative h-full">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-200/80 via-primary-50/60 to-transparent z-10" />
             <Image
               src={slide.image}
               alt={slide.title}
@@ -71,17 +105,22 @@ const Hero = () => {
               className="object-cover"
               priority={index === 0}
             />
+            {/* Overlay sombre */}
+            <div className="absolute inset-0 bg-black/60 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-200/80 via-primary-50/60 to-transparent z-20" />
           </div>
 
           {/* Contenu */}
-          <div className="absolute inset-0 z-20 flex items-center">
+          <div className="absolute inset-0 z-30 flex items-center">
             <div className="container mx-auto px-6">
               <div className="max-w-3xl">
-                <h1 className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg mb-6 animate-slide-up">
-                  {slide.title}
+                <h1 className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg mb-6 animate-slide-up whitespace-pre-line">
+                  {displayedTitle}
+                  <span className="border-r-2 border-white animate-pulse ml-1" />
                 </h1>
-                <p className="text-xl md:text-2xl text-white/90 mb-8 animate-slide-up animation-delay-200">
-                  {slide.subtitle}
+                <p className="text-xl md:text-2xl text-white/90 mb-8 animate-slide-up animation-delay-200 whitespace-pre-line">
+                  {displayedSubtitle}
+                  <span className="border-r border-white animate-pulse ml-1" />
                 </p>
                 <button className="bg-primary-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-600 transition-all duration-300 transform hover:scale-105 shadow-2xl animate-slide-up animation-delay-400">
                   {slide.buttonText}
